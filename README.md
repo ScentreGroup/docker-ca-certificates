@@ -18,8 +18,11 @@ is a better option (feel free to raise a GitHub issue for discussion).
 Basic pattern for a `scratch` based image, assuming locally pre-built binary:
 
 ```
-FROM scentregroup/ca-certificates
-COPY /myclient /myclient
+FROM scentregroup/ca-certificates as certs
+
+FROM scratch
+COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY ./myclient /myclient
 CMD ["/myclient"]
 ```
 
