@@ -1,0 +1,6 @@
+FROM scentregroup/ca-certificates as certs
+FROM wmark/curl as curl
+FROM scratch
+COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=curl /usr/bin/curl /usr/bin/curl
+CMD ["curl", "-IvL", "https://letsencrypt.org/"]
